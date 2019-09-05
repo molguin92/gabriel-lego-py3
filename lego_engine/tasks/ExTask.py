@@ -1,8 +1,7 @@
 import random
 
-from .Task import Task
-import bitmap as bm
-import config
+from lego_engine import bitmap as bm, config
+from lego_engine.tasks.Task import Task
 
 
 class ExTask(Task):

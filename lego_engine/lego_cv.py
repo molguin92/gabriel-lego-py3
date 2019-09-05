@@ -136,10 +136,10 @@ def get_corner_pts(bw, perimeter=None, center=None, method='line'):
         center = (center[1], center[0])  # in (x, y) format
         perimeter = int(perimeter)
 
-        lines = cv2.HoughLinesP(bw, 1, np.pi / 180, perimeter / 40,
-                                minLineLength=perimeter / 20,
-                                maxLineGap=perimeter / 20)
-        lines = lines[0]
+        lines = cv2.HoughLinesP(bw, 1, np.pi / 180, perimeter // 40,
+                                minLineLength=perimeter // 20,
+                                maxLineGap=perimeter // 20)
+        #lines = lines[0]
 
         # This is only for test
         # img = np.zeros((bw.shape[0], bw.shape[1], 3), dtype=np.uint8)
@@ -155,6 +155,7 @@ def get_corner_pts(bw, perimeter=None, center=None, method='line'):
         # get four major lines
         new_lines = list()
         for line in lines:
+            line = line[0]
             flag = True
             for new_line in new_lines:
                 if is_line_seg_close(line, new_line):
@@ -163,6 +164,12 @@ def get_corner_pts(bw, perimeter=None, center=None, method='line'):
             if flag:
                 new_lines.append(list(line))
         if len(new_lines) != 4:
+            print(
+                f'''
+                lines: {lines}
+                new_lines: {new_lines}
+                '''
+            )
             return None
 
         # get four reasonable line intersections
@@ -175,7 +182,7 @@ def get_corner_pts(bw, perimeter=None, center=None, method='line'):
                 if inter_p == (-1, -1):
                     continue
                 dist = zc.euc_dist(inter_p, center)
-                if dist < perimeter / 3:
+                if dist < perimeter // 3:
                     corners.append(inter_p)
         if len(corners) != 4:
             return None

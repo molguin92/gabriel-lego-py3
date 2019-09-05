@@ -22,7 +22,6 @@
 
 import json
 import os
-import socket
 import struct
 import sys
 import threading
@@ -33,9 +32,9 @@ import numpy as np
 
 if os.path.isdir("../../gabriel/server"):
     sys.path.insert(0, "../../gabriel/server")
-import gabriel
+# import gabriel
 
-LOG = gabriel.logging.getLogger(__name__)
+# LOG = gabriel.logging.getLogger(__name__)
 
 from . import bitmap as bm
 from . import config
@@ -56,9 +55,9 @@ display_list = config.DISPLAY_LIST
 LOG_TAG = "Lego Server: "
 
 
-class LegoHandler(gabriel.network.CommonHandler):
+class LegoHandler:  # gabriel.network.CommonHandler):
     def setup(self):
-        LOG.info(LOG_TAG + "proxy connected to Lego server")
+        # LOG.info(LOG_TAG + "proxy connected to Lego server")
         super(LegoHandler, self).setup()
 
         self.stop = threading.Event()
@@ -183,39 +182,38 @@ class LegoHandler(gabriel.network.CommonHandler):
 
         return json.dumps(result)
 
-
-class LegoServer(gabriel.network.CommonServer):
-    def __init__(self, port, handler):
-        gabriel.network.CommonServer.__init__(self, port,
-                                              handler)  # cannot use super
-        # because it's old style class
-        LOG.info(LOG_TAG + "* Lego server configuration")
-        LOG.info(
-            LOG_TAG + " - Open TCP Server at %s" % (str(self.server_address)))
-        LOG.info(LOG_TAG + " - Disable nagle (No TCP delay)  : %s" %
-                 str(self.socket.getsockopt(socket.IPPROTO_TCP,
-                                            socket.TCP_NODELAY)))
-        LOG.info(LOG_TAG + "-" * 50)
-
-    def terminate(self):
-        gabriel.network.CommonServer.terminate(self)
-
-
-if __name__ == "__main__":
-    lego_server = LegoServer(config.TASK_SERVER_PORT, LegoHandler)
-    lego_thread = threading.Thread(target=lego_server.serve_forever)
-    lego_thread.daemon = True
-
-    try:
-        lego_thread.start()
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt as e:
-        LOG.info(LOG_TAG + "Exit by user\n")
-        sys.exit(1)
-    except Exception as e:
-        LOG.error(str(e))
-        sys.exit(1)
-    finally:
-        if lego_server is not None:
-            lego_server.terminate()
+# class LegoServer(gabriel.network.CommonServer):
+#     def __init__(self, port, handler):
+#         gabriel.network.CommonServer.__init__(self, port,
+#                                               handler)  # cannot use super
+#         # because it's old style class
+#         LOG.info(LOG_TAG + "* Lego server configuration")
+#         LOG.info(
+#             LOG_TAG + " - Open TCP Server at %s" % (str(self.server_address)))
+#         LOG.info(LOG_TAG + " - Disable nagle (No TCP delay)  : %s" %
+#                  str(self.socket.getsockopt(socket.IPPROTO_TCP,
+#                                             socket.TCP_NODELAY)))
+#         LOG.info(LOG_TAG + "-" * 50)
+#
+#     def terminate(self):
+#         gabriel.network.CommonServer.terminate(self)
+#
+#
+# if __name__ == "__main__":
+#     lego_server = LegoServer(config.TASK_SERVER_PORT, LegoHandler)
+#     lego_thread = threading.Thread(target=lego_server.serve_forever)
+#     lego_thread.daemon = True
+#
+#     try:
+#         lego_thread.start()
+#         while True:
+#             time.sleep(1)
+#     except KeyboardInterrupt as e:
+#         LOG.info(LOG_TAG + "Exit by user\n")
+#         sys.exit(1)
+#     except Exception as e:
+#         LOG.error(str(e))
+#         sys.exit(1)
+#     finally:
+#         if lego_server is not None:
+#             lego_server.terminate()

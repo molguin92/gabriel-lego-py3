@@ -43,7 +43,7 @@ def ind2sub(size, idx):
     Convert an index to a tuple of (row_idx, col_idx)
     @size is the size of the image: (n_rows, n_cols)
     '''
-    return (idx / size[1], idx % size[1])
+    return (idx // size[1], idx % size[1])
 
 
 def euc_dist(p1, p2):
