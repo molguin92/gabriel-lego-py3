@@ -19,10 +19,12 @@
 #   limitations under the License.
 #
 
-import time
 import random
-import bitmap as bm
-import config
+import time
+
+import cv.bitmap as bm
+from lego_engine import config
+
 
 class Task:
     def __init__(self, bitmaps):
