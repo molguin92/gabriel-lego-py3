@@ -486,6 +486,11 @@ def bitmap_diff(bm1, bm2):
     'larger' : an integer of either 1 or 2. 1 means bm2 is part of bm1,
     and vice versa
     '''
+
+    # if arrays are the same return None
+    if np.array_equal(bm1, bm2):
+        return None
+
     # case 1: bm2 has one more piece
     bm_diff = bitmap_more(bm1, bm2)
     if bm_diff is not None:
