@@ -170,7 +170,22 @@ Life_of_George_Bricks = BrickCollection(
 DefaultGenerator = TaskGenerator(Life_of_George_Bricks)
 
 if __name__ == '__main__':
-    for i, t in enumerate(DefaultGenerator.generate(200)):
-        print(' ')
-        print(i)
-        print(t)
+    import pprint
+    import io
+
+    # 90 is the approx num of steps necessary for a 25 minute-long task
+    task = DefaultGenerator.generate(90)
+    t_string = io.StringIO()
+    pprint.pprint(task, stream=t_string)
+
+    print(
+        f'''
+from numpy import array
+
+# Labels: nothing:0, white:1, green:2, yellow:3, red:4, blue:5, black:6,
+# unsure:7
+bitmaps = \\
+{t_string.getvalue()}
+
+        '''
+    )
