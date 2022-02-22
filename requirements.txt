@@ -6,3 +6,4 @@ dlib
 scikit-image
 protobuf
 pandas
+nptyping

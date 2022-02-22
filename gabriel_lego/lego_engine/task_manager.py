@@ -5,7 +5,7 @@ import random
 from abc import ABC, abstractmethod
 from typing import List, Optional, Tuple, Union
 
-import numpy as np
+import nptyping as npt
 
 from gabriel_lego.cv import bitmap as bm
 from gabriel_lego.lego_engine import config, tasks
@@ -31,7 +31,8 @@ class UnreachableStateError(Exception):
 
 
 def get_guidance_between_states(from_state: BoardState,
-                                to_state: BoardState) -> Tuple[str, np.ndarray]:
+                                to_state: BoardState) -> Tuple[
+    str, npt.NDArray]:
     if from_state == to_state:
         raise NoStateChangeError()
 
@@ -69,7 +70,7 @@ def get_guidance_between_states(from_state: BoardState,
 
 
 def get_error_guidance(target_state: BoardState) \
-        -> Tuple[str, Optional[np.ndarray]]:
+        -> Tuple[str, Optional[npt.NDArray]]:
     if target_state.empty_board:
         instruction = 'Incorrect. Please clear the LEGO board to continue.'
         return instruction, None
@@ -142,7 +143,7 @@ class TaskState(ABC):
         return self._current_instruction
 
     @property
-    def current_image(self) -> np.ndarray:
+    def current_image(self) -> npt.NDArray:
         """
         :return: The current instruction in image form (as Numpy array for
         OpenCV).
