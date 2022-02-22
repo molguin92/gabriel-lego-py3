@@ -6,6 +6,7 @@ from abc import ABC, abstractmethod
 from typing import List, Optional, Tuple, Union
 
 import nptyping as npt
+import numpy as np
 
 from gabriel_lego.cv import bitmap as bm
 from gabriel_lego.lego_engine import config, tasks
@@ -184,6 +185,7 @@ class InitialTaskState(TaskState):
         self._task = task
         self._current_instruction = 'To start, put the empty LEGO board into ' \
                                     'focus.'
+        self._current_image = np.zeros((100, 100, 3), dtype=np.uint8)
         self._target_state_index = 0
 
     @property
