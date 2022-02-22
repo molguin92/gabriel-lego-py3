@@ -5,7 +5,7 @@ with open('./requirements.txt', 'r') as f:
 
 setuptools.setup(
     name="gabriel_lego",
-    version="0.2.0",
+    version="0.2.1",
     author="Manuel Olguin Munoz",
     author_email="molguin@kth.se",
     description="Gabriel LEGO Assembly cognitive engine.",

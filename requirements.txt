@@ -1,9 +1,6 @@
-cython
-gabriel-server
 opencv-contrib-python
 numpy
 dlib
 scikit-image
-protobuf
 pandas
 nptyping
