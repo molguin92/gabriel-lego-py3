@@ -1,3 +1,4 @@
+cython
 gabriel-server
 opencv-contrib-python
 numpy
