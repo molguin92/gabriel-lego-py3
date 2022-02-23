@@ -44,7 +44,7 @@ class LEGOTask:
         return self._task_len
 
     def get_current_guide_illustration(self) -> npt.NDArray:
-        return self._state.current_image.copy()
+        return self._state.current_image
 
     def get_current_instruction(self) -> str:
         return self._state.current_instruction

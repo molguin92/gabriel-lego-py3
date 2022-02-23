@@ -3,11 +3,10 @@ from __future__ import annotations
 import logging
 import random
 from abc import ABC, abstractmethod
-from typing import List, Optional, Tuple, Union
+from typing import List, Tuple, Union
 
 import nptyping as npt
 import numpy as np
-
 from gabriel_lego.cv import bitmap as bm
 from gabriel_lego.lego_engine import config, tasks
 from gabriel_lego.lego_engine.board import BoardState, EmptyBoardState
@@ -71,10 +70,10 @@ def get_guidance_between_states(from_state: BoardState,
 
 
 def get_error_guidance(target_state: BoardState) \
-        -> Tuple[str, Optional[npt.NDArray]]:
+        -> Tuple[str, npt.NDArray]:
     if target_state.empty_board:
         instruction = 'Incorrect. Please clear the LEGO board to continue.'
-        return instruction, None
+        return instruction, np.zeros((5, 5, 3), dtype=np.uint8)
 
     instruction = "This is incorrect, please revert to the model shown on " \
                   "the screen."
@@ -133,8 +132,8 @@ class TaskState(ABC):
             return CorrectTaskState(task, state_index)
 
     def __init__(self):
-        self._current_image = None
-        self._current_instruction = None
+        self._current_image = np.zeros((100, 100, 3), dtype=np.uint8)
+        self._current_instruction = ''
 
     @property
     def current_instruction(self) -> str:
@@ -149,7 +148,7 @@ class TaskState(ABC):
         :return: The current instruction in image form (as Numpy array for
         OpenCV).
         """
-        return self._current_image
+        return self._current_image.copy()
 
     @abstractmethod
     def compute_next_task_state(self, new_board_state: BoardState) -> TaskState:
@@ -185,7 +184,6 @@ class InitialTaskState(TaskState):
         self._task = task
         self._current_instruction = 'To start, put the empty LEGO board into ' \
                                     'focus.'
-        self._current_image = np.zeros((100, 100, 3), dtype=np.uint8)
         self._target_state_index = 0
 
     @property
