@@ -452,7 +452,7 @@ def normalize_brightness(img, mask=None, method='hist', max_percentile=100,
     shape = img.shape
     if mask is None:
         mask = np.ones((shape[0], shape[1]), dtype=bool)
-    if mask.dtype != np.bool:
+    if mask.dtype != bool:
         mask = mask.astype(bool)
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
     v = hsv[:, :, 2]
@@ -489,11 +489,11 @@ def normalize_color(img, mask_info=None, mask_apply=None, method='hist',
     shape = img.shape
     if mask_info is None:
         mask_info = np.ones((shape[0], shape[1]), dtype=bool)
-    if mask_info.dtype != np.bool:
+    if mask_info.dtype != bool:
         mask_info = mask_info.astype(bool)
     if mask_apply is None:
         mask_apply = mask_info
-    if mask_apply.dtype != np.bool:
+    if mask_apply.dtype != bool:
         mask_apply = mask_apply.astype(bool)
     img_ret = img.copy()
     if method == 'hist':  # doesn't work well for over-exposed images

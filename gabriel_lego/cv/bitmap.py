@@ -182,7 +182,7 @@ def bitmap2guidance_animation(bitmap, action, diff_piece=None, diff_piece2=None,
                 row_idx == 0 or row_idx == height - 1) and direction != \
                 config.DIRECTION_NONE:
             bitmap_new = np.zeros((bitmap.shape[0] + 1, bitmap.shape[1]),
-                                  dtype=np.int)
+                                  dtype=int)
             if row_idx == 0:
                 bitmap_new[1:, :] = bitmap
                 row_idx += 1
@@ -425,8 +425,8 @@ def bitmap_more_equalsize(bm1, bm2):
 
     # initialize
     bm_more = None
-    bm_more_pieces = np.zeros(shape, dtype=np.int)
-    bm_more_labels = np.zeros(shape, dtype=np.int)
+    bm_more_pieces = np.zeros(shape, dtype=int)
+    bm_more_labels = np.zeros(shape, dtype=int)
 
     # now start...
     i = 0
@@ -533,7 +533,7 @@ def bitmap_diff(bm1, bm2):
 
 def shift_bitmap(bm, shift, final_shape):
     shape = bm.shape
-    bm_shift = np.zeros(final_shape, dtype=np.int)
+    bm_shift = np.zeros(final_shape, dtype=int)
     bm_shift[shift[0]:  shift[0] + shape[0], shift[1]: shift[1] + shape[1]] = bm
     return bm_shift
 
